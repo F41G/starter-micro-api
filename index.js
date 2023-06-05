@@ -1,6 +1,4 @@
-const subLink = 'https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/sub/sub_merge.txt';
-
-async function fetch(request) {
+const fetch = async (request) => {
   let url = new URL(request.url);
   let realhostname = url.pathname.split('/')[1];
   let realpathname = url.pathname.split('/')[2];
@@ -40,7 +38,7 @@ async function fetch(request) {
         }
       }
     }
-    return new Response(generateClashSubscribeLink(newConfigs));
+    return generateClashSubscribeLink(newConfigs);
   } else {
     const url = new URL(request.url);
     const splitted = url.pathname.replace(/^\/*/, '').split('/');
@@ -50,7 +48,7 @@ async function fetch(request) {
     url.protocol = 'https';
     return fetch(new Request(url, request));
   }
-}
+};
 
 function isIp(ipstr) {
   try {
@@ -63,7 +61,7 @@ function isIp(ipstr) {
       return false;
     }
     return true;
-  } catch (ee) { }
+  } catch (ee) {}
   return false;
 }
 
@@ -106,22 +104,19 @@ proxies:
 `;
   const splittedLinks = links.split('\n');
   const decodedLinks = [];
-  
   const t = `
 proxy-groups:
 - name: global
   type: select
   proxies:
 `;
-  
   splittedLinks.forEach((link) => {
     const vmessLink = link.trim();
     if (vmessLink.startsWith('vmess://')) {
       decodedLinks.push(decodeVmessLink(vmessLink));
     }
   });
-  
   return `${result}${decodedLinks.map((item, index) => inClashForm(item, index)).join('\n')}${t}${decodedLinks.map((item, index) => getNames(item, index)).join('\n')}`;
 }
 
-export { fetch };
+fetch(request);
