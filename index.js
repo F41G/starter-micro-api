@@ -1,3 +1,5 @@
+const subLink = 'https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/sub/sub_merge.txt';
+
 const fetch = async (request) => {
   let url = new URL(request.url);
   let realhostname = url.pathname.split('/')[1];
