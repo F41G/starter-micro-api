@@ -121,4 +121,4 @@ proxy-groups:
   return `${result}${decodedLinks.map((item, index) => inClashForm(item, index)).join('\n')}${t}${decodedLinks.map((item, index) => getNames(item, index)).join('\n')}`;
 }
 
-fetch(request);
+module.exports = fetch;
